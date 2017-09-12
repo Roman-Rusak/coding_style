@@ -41,8 +41,8 @@ Place one empty line between functions. Don't begin or end a function with an em
 Horizontal space
 ^^^^^^^^^^^^^^^^
 
-Always add single space after conditional and loop keywords::
-    
+Always add single space after conditional and loop keywords( if, switch, case, for, do, while) ::
+
     if (condition) {    // correct
         // ...
     }
@@ -52,11 +52,27 @@ Always add single space after conditional and loop keywords::
             // ...
     }
 
+    if (x == y) {       // correct
+        ...
+    } else {
+        ...
+    }
+
     for(int i = 0; i < CONST; ++i) {    // INCORRECT
         // ... 
     }
 
-Add single space around binary operators. No space is necessary for unary operators::
+Don't add single space after these keywords: sizeof, typeof, alignof, or __attribute__. :: 
+
+    s = sizeof(struct file);    // correct
+
+Do not add spaces around (inside) parenthesized expressions. ::
+    
+    s = sizeof ( struct file );  // INCORRECT
+
+Add single space around(on each side of) binary operators and ternary operators. No space is necessary for unary operators::
+
+    const int x = (y != 0U && z > y) ? z : y;               //correct
     
     const int y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);    // correct
 
@@ -150,6 +166,16 @@ Although not directly related to formatting, here are a few notes about using co
         start_timer();
     }
 
+The preferred style for long (multi-line) comments is: ::
+
+    /*
+     * This is the preferred style for multi-line
+     * comments in the Linux kernel source code.
+     * Please use it consistently.
+     *
+     * Description:  A column of asterisks on the left side,
+     * with beginning and ending almost-blank lines.
+     */
 
 Formatting your code
 ^^^^^^^^^^^^^^^^^^^^
