@@ -53,9 +53,9 @@ Always add single space after conditional and loop keywords( if, switch, case, f
     }
 
     if (x == y) {       // correct
-        ...
+       // ...
     } else {
-        ...
+       // ...
     }
 
     for(int i = 0; i < CONST; ++i) {    // INCORRECT
@@ -108,12 +108,12 @@ Braces
     // This is correct:
     void function(int arg)
     {
-
+        // ...
     }
 
     // NOT like this:
     void function(int arg) {
-
+        // ...
     }
 
 - Within a function, place opening brace on the same line with conditional and loop statements::
@@ -176,6 +176,91 @@ The preferred style for long (multi-line) comments is: ::
      * with beginning and ending almost-blank lines.
      */
 
+Breaking long lines and strings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The limit on the length of lines is 80 columns and this is a strongly preferred limit.
+Statements longer than 80 columns will be broken into sensible chunks, unless exceeding 80 columns significantly increases 
+readability and does not hide information. Descendants are always substantially shorter than the parent and are placed substantially to the right. 
+The same applies to function headers with a long argument list. 
+However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. :: 
+
+    void some_function(const uint8_t *const x, const uint32_t y,
+                        const uint32_t z, bool *const q)               
+    {
+        // ...
+    }                        // correct
+
+    void some_function(const uint8_t *const x, const uint32_t y, const uint32_t z, bool *const q)         
+    {
+        // ... 
+    }                       // INCORRECT  
+
+Naming
+^^^^^^
+
+GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names.
+The global function name must contain the name of the module in which it is defined.
+If you have a function that counts the number of active users and defined in ``statistics.c``, you should call that: 
+::
+    uint32_t statistics_count_active_users(void);    // correct 
+
+    uint32_t stat_count_active_users(void);          // also correct
+
+    uint32_t cntusr(void);                           // INCORRECT  
+
+Encoding the type of a function into the name (so-called Hungarian
+notation) is brain damaged - the compiler knows the types anyway and can
+check those, and it only confuses the programmer.
+
+LOCAL function name should be short but descriptive, and start with  ``_`` symbol.
+::
+    static uint32_t _usr_counter(void)
+    {
+        // ... 
+    }   // correct
+
+    static uint32_t _this_function_return_user_counter(void)
+    {
+        // ... 
+    }   // INCORRECT
+
+    static uint32_t usr_counter(void)
+    {
+        // ... 
+    }   // INCORRECT
+
+    static uint32_t _foo(void)
+    {
+        // ...
+    }   // INCORRECT
+
+LOCAL variable names declared as static within a file or a function should be descriptive, and start with  ``_`` symbol.
+::
+    static bool _is_ack_received = false;   // correct
+    static bool _is_ack = false;            // also correct
+    static bool is_ack_received = false;    // INCORRECT
+    static bool _flag1 = false;             // INCORRECT
+
+LOCAL variable names should be short, and to the point.  If you have
+some random integer loop counter, it should probably be called ``i``.
+Calling it ``loop_counter`` is non-productive, if there is no chance of it
+being mis-understood.  Similarly, ``tmp`` can be just about any type of
+variable that is used to hold a temporary value.
+
+CONST variable names should be always UPPERCASE.::
+
+    const uint32_t DAYS_IN_WEEK = 7U;       // correct
+    const uint32_t days_in_week = 7U;       // INCORRECT
+
+DEFINE statements and macros names should be always UPPERCASE.::
+
+    #define SEC_PER_YEAR         (60*60*24*365UL)           // correct
+    #define MESSAGE_BUFFER_SIZE  (512U)                     // correct
+    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))  // correct
+    #define min(x,y)             (((x) < (y)) ? (x) : (y))  // INCORRECT 
+
+    
 Formatting your code
 ^^^^^^^^^^^^^^^^^^^^
 
