@@ -41,7 +41,7 @@ Place one empty line between functions. Don't begin or end a function with an em
 Horizontal space
 ^^^^^^^^^^^^^^^^
 
-Always add single space after conditional and loop keywords( if, switch, case, for, do, while) ::
+Always add single space after conditional and loop keywords( if, switch, case, for, do, while). ::
 
     if (condition) {    // correct
         // ...
@@ -80,7 +80,6 @@ Add single space around(on each side of) binary operators and ternary operators.
     ++y_cur;
 
     const int y = y0+(x-x0)*(y1-y0)/(x1-x0);                // INCORRECT
-
 
 No space is necessary around ``.`` and ``->`` operators.
 
@@ -182,24 +181,4 @@ Formatting your code
 
 You can use ``astyle`` program to format your code according to the above recommendations.
 
-If you are writing a file from scratch, or doing a complete rewrite, feel free to re-format the entire file. If you are changing a small portion of file, don't re-format the code you didn't change. This will help others when they review your changes.
-
-To re-format a file, run::
-
-    tools/format.sh components/my_component/file.c
-
-Documenting code
-----------------
-
-Please see the guide here: :doc:`documenting-code`.
-
-Structure and naming
---------------------
-
-
-
-Language features
------------------
-
-To be written.
 
