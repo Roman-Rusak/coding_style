@@ -22,14 +22,14 @@ Vertical space
 Place one empty line between functions. Don't begin or end a function with an empty line.
 ::
 
-    void function1()
+    void function1(void)
     {
         do_one_thing();
         do_another_thing();
                                     // INCORRECT, don't place empty line here
     }
                                     // place empty line here
-    void function2()
+    void function2(void)
     {
                                     // INCORRECT, don't use an empty line here
         int var = 0;
@@ -134,7 +134,7 @@ Although not directly related to formatting, here are a few notes about using co
 
 - Don't use single comments to disable some functionality::
 
-    void init_something()
+    void init_something(void)
     {
         setup_dma();
         // load_resources();                // WHY is this thing commented, asks the reader?
@@ -143,7 +143,7 @@ Although not directly related to formatting, here are a few notes about using co
 
 - If some code is no longer required, remove it completely. If you need it you can always look it up in git history of this file. If you disable some call because of temporary reasons, with an intention to restore it in the future, add explanation on the adjacent line::
 
-    void init_something()
+    void init_something(void)
     {
         setup_dma();
         // TODO: we should load resources here, but loader is not fully integrated yet.
@@ -155,7 +155,7 @@ Although not directly related to formatting, here are a few notes about using co
 
 - Don't add trivial comments about authorship and change date. You can always look up who modified any given line using git. E.g. this comment adds clutter to the code without adding any useful information::
 
-    void init_something()
+    void init_something(void)
     {
         setup_dma();
         // XXX add 2016-09-01
@@ -185,16 +185,18 @@ readability and does not hide information. Descendants are always substantially 
 The same applies to function headers with a long argument list. 
 However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. :: 
 
+    // This is correct
     void some_function(const uint8_t *const x, const uint32_t y,
                         const uint32_t z, bool *const q)               
     {
         // ...
-    }                        // correct
+    }                        
 
+    // INCORRECT 
     void some_function(const uint8_t *const x, const uint32_t y, const uint32_t z, bool *const q)         
     {
         // ... 
-    }                       // INCORRECT  
+    }                        
 
 Naming
 ^^^^^^
@@ -215,25 +217,25 @@ check those, and it only confuses the programmer.
 
 LOCAL function name should be short but descriptive, and start with  ``_`` symbol.
 ::
-    static uint32_t _usr_counter(void)
+    static uint32_t _usr_counter(void)                          // correct
     {
         // ... 
-    }   // correct
+    }
 
-    static uint32_t _this_function_return_user_counter(void)
+    static uint32_t _this_function_return_user_counter(void)    // INCORRECT
     {
         // ... 
-    }   // INCORRECT
+    }  
 
-    static uint32_t usr_counter(void)
+    static uint32_t usr_counter(void)                           // INCORRECT
     {
         // ... 
-    }   // INCORRECT
+    }
 
-    static uint32_t _foo(void)
+    static uint32_t _foo(void)                                  // INCORRECT
     {
         // ...
-    }   // INCORRECT
+    }
 
 LOCAL variable names declared as static within a file or a function should be descriptive, and start with  ``_`` symbol.
 ::
@@ -260,7 +262,47 @@ DEFINE statements and macros names should be always UPPERCASE.::
     #define MIN(x,y)             (((x) < (y)) ? (x) : (y))  // correct
     #define min(x,y)             (((x) < (y)) ? (x) : (y))  // INCORRECT 
 
-    
+Enums
+^^^^^
+
+It's preferable to use ``enum`` instead ``#define`` for multiple definition.
+Enum should have a brace on a separate line and enum elements must be written in a column.::
+
+    enum example_e                          // correct
+    {
+        ELM_1,
+        ELM_2,
+        ELM_3 
+    };
+
+    enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
+
+Enum should have descriptive name and the name must end with the ``_e`` postfix.
+Enum element names should be always UPPERCASE and must contain at least part of the enum name.::
+
+    enum gnss_mode_e                        // correct
+    {
+        MODE_GPS = 0,
+        MODE_SBAS,
+        MODE_GALILEO,
+        MODE_BEIDOU,
+        MODE_IMES,
+        MODE_QZSS,
+        MODE_GLONASS
+    };
+
+    enum gnm_e                              // INCORRECT
+    {    
+        GPS = 0,
+        SBAS,
+        GALILEO,
+        BEIDOU,
+        IMES,
+        QZSS,
+        GLONASS
+    } 
+
+
 Formatting your code
 ^^^^^^^^^^^^^^^^^^^^
 
