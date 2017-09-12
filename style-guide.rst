@@ -1,17 +1,12 @@
-Espressif IoT Development Framework Style Guide
+
+Test C-Style Guide
 ===============================================
 
 
 About this guide
 ----------------
-
-Purpose of this style guide is to encourage use of common coding practices within the ESP-IDF. 
-
+ 
 Style guide is a set of rules which are aimed to help create readable, maintainable, and robust code. By writing code which looks the same way across the code base we help others read and comprehend the code. By using same conventions for spaces and newlines we reduce chances that future changes will produce huge unreadable diffs. By following common patterns for module structure and by using language features consistently we help others understand code behavior.
-
-We try to keep rules simple enough, which means that they can not cover all potential cases. In some cases one has to bend these simple rules to achieve readability, maintainability, or robustness.
-
-When doing modifications to third-party code used in ESP-IDF, follow the way that particular project is written. That will help propose useful changes for merging into upstream project. 
 
 C code formatting
 -----------------
@@ -61,11 +56,9 @@ Always add single space after conditional and loop keywords::
         // ... 
     }
 
-Add single space around binary operators. No space is necessary for unary operators. It is okay to drop space around multiply and divide operators::
+Add single space around binary operators. No space is necessary for unary operators::
     
     const int y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);    // correct
-
-    const int y = y0 + (x - x0)*(y1 - y0)/(x1 - x0);        // also okay
 
     int y_cur = -y;                                         // correct
     ++y_cur;
