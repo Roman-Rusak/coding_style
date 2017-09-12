@@ -183,8 +183,8 @@ The limit on the length of lines is 80 columns and this is a strongly preferred 
 Statements longer than 80 columns will be broken into sensible chunks, unless exceeding 80 columns significantly increases 
 readability and does not hide information. Descendants are always substantially shorter than the parent and are placed substantially to the right. 
 The same applies to function headers with a long argument list. 
-However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. :: 
-
+However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. 
+:: 
     // This is correct
     void some_function(const uint8_t *const x, const uint32_t y,
                         const uint32_t z, bool *const q)               
@@ -215,7 +215,7 @@ Encoding the type of a function into the name (so-called Hungarian
 notation) is brain damaged - the compiler knows the types anyway and can
 check those, and it only confuses the programmer.
 
-LOCAL function name should be short but descriptive, and start with  ``_`` symbol.
+LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
 ::
     static uint32_t _usr_counter(void)                          // correct
     {
@@ -237,7 +237,7 @@ LOCAL function name should be short but descriptive, and start with  ``_`` symbo
         // ...
     }
 
-LOCAL variable names declared as static within a file or a function should be descriptive, and start with  ``_`` symbol.
+LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
 ::
     static bool _is_ack_received = false;   // correct
     static bool _is_ack = false;            // also correct
@@ -250,24 +250,24 @@ Calling it ``loop_counter`` is non-productive, if there is no chance of it
 being mis-understood.  Similarly, ``tmp`` can be just about any type of
 variable that is used to hold a temporary value.
 
-CONST variable names should be always UPPERCASE.::
-
+CONST variable names should be always UPPERCASE.
+::
     const uint32_t DAYS_IN_WEEK = 7U;       // correct
     const uint32_t days_in_week = 7U;       // INCORRECT
 
-DEFINE statements and macros names should be always UPPERCASE.::
-
-    #define SEC_PER_YEAR         (60*60*24*365UL)           // correct
-    #define MESSAGE_BUFFER_SIZE  (512U)                     // correct
-    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))  // correct
-    #define min(x,y)             (((x) < (y)) ? (x) : (y))  // INCORRECT 
+DEFINE statements and macros names should be always UPPERCASE.
+::
+    #define SEC_PER_YEAR         (60U * 60U * 24U * 365UL)     // correct
+    #define MESSAGE_BUFFER_SIZE  (512U)                        // correct
+    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))     // correct
+    #define min(x,y)             (((x) < (y)) ? (x) : (y))     // INCORRECT 
 
 Enums
 ^^^^^
 
 It's preferable to use ``enum`` instead ``#define`` for multiple definition.
-Enum should have a brace on a separate line and enum elements must be written in a column.::
-
+Enum should have a brace on a separate line and enum elements must be written in a column.
+::
     enum example_e                          // correct
     {
         ELM_1,
@@ -278,8 +278,8 @@ Enum should have a brace on a separate line and enum elements must be written in
     enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
 
 Enum should have descriptive name and the name must end with the ``_e`` postfix.
-Enum element names should be always UPPERCASE and must contain at least part of the enum name.::
-
+Enum element names should be always UPPERCASE and must contain at least part of the enum name.
+::
     enum gnss_mode_e                        // correct
     {
         MODE_GPS = 0,
