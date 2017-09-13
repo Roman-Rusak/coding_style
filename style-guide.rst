@@ -68,7 +68,7 @@ Don't add single space after these keywords: sizeof, typeof, alignof, or __attri
 
 Do not add spaces around (inside) parenthesized expressions. ::
     
-    s = sizeof ( struct file );  // INCORRECT
+    s = sizeof( struct file );  // INCORRECT
 
 Add single space around(on each side of) binary operators and ternary operators. No space is necessary for unary operators::
 
@@ -124,6 +124,147 @@ Braces
         do_two();
     }
 
+Naming
+^^^^^^
+
+GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names.
+The global function name must contain the name of the module in which it is defined.
+If you have a function that counts the number of active users and defined in ``statistics.c``, you should call that: 
+::
+    uint32_t statistics_count_active_users(void);    // correct 
+
+    uint32_t stat_count_active_users(void);          // also correct
+
+    uint32_t cntusr(void);                           // INCORRECT  
+
+Encoding the type of a function into the name (so-called Hungarian
+notation) is brain damaged - the compiler knows the types anyway and can
+check those, and it only confuses the programmer.
+
+LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
+::
+    static uint32_t _usr_counter(void)                          // correct
+    {
+        // ... 
+    }
+
+    static uint32_t _this_function_return_user_counter(void)    // INCORRECT
+    {
+        // ... 
+    }  
+
+    static uint32_t usr_counter(void)                           // INCORRECT
+    {
+        // ... 
+    }
+
+    static uint32_t _foo(void)                                  // INCORRECT
+    {
+        // ...
+    }
+
+LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
+::
+    static bool _is_ack_received = false;   // correct
+    static bool _is_ack = false;            // also correct
+    static bool is_ack_received = false;    // INCORRECT
+    static bool _flag1 = false;             // INCORRECT
+
+LOCAL variable names should be short, and to the point.  If you have
+some random integer loop counter, it should probably be called ``i``.
+Calling it ``loop_counter`` is non-productive, if there is no chance of it
+being mis-understood.  Similarly, ``tmp`` can be just about any type of
+variable that is used to hold a temporary value.
+
+CONST variable names should be always UPPERCASE.
+::
+    const uint32_t DAYS_IN_WEEK = 7U;       // correct
+    const uint32_t days_in_week = 7U;       // INCORRECT
+
+DEFINE statements and macros names should be always UPPERCASE.
+::
+    #define SEC_PER_YEAR         (60U * 60U * 24U * 365UL)     // correct
+    #define MESSAGE_BUFFER_SIZE  (512U)                        // correct
+    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))     // correct
+    #define min(x,y)             (((x) < (y)) ? (x) : (y))     // INCORRECT 
+
+Enum
+^^^^
+
+It's preferable to use ``enum`` instead ``#define`` for multiple definition.
+Enum should have an opening brace on the same line with the enum name, add single space between enum name and opening brace.
+Enum members must be written in a column.
+::
+    enum example_e {                         // correct
+        ELM_1,
+        ELM_2,
+        ELM_3 
+    };
+
+    enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
+
+Enum should have descriptive name and the name must end with the ``_e`` postfix.
+Enum member names should be always UPPERCASE and must contain at least part of the enum name.
+::
+    enum gnss_mode_e {                      // correct
+        MODE_GPS = 0U,
+        MODE_SBAS,
+        MODE_GALILEO,
+        MODE_BEIDOU,
+        MODE_IMES,
+        MODE_QZSS,
+        MODE_GLONASS
+    };
+
+    enum gnm {                                // INCORRECT   
+        GPS = 0U,
+        SBAS,
+        GALILEO,
+        BEIDOU,
+        IMES,
+        QZSS,
+        GLONASS
+    } 
+
+Struct
+^^^^^^
+
+Struct should have descriptive name and the name must end with the ``_s`` postfix.
+Struct should have an opening brace on the same line with the struct name, add single space between struct name and opening brace.
+Struct members should be always lower_case and written in a column.
+::
+
+    struct sample_s {                       // correct
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
+    struct sample{                          // INCORRECT
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
+    struct sample_s {                       // INCORRECT
+        uint32_t FirstField;
+        uint8_t SecondField;
+        uint8_t ThirdField;
+        uint8_t FourthField;
+        bool SampleFlag;
+    };
+
+    struct {                                // INCORRECT
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
 
 Comments
 ^^^^^^^^
@@ -198,109 +339,6 @@ However, never break user-visible strings such as printk messages, because that 
         // ... 
     }                        
 
-Naming
-^^^^^^
-
-GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names.
-The global function name must contain the name of the module in which it is defined.
-If you have a function that counts the number of active users and defined in ``statistics.c``, you should call that: 
-::
-    uint32_t statistics_count_active_users(void);    // correct 
-
-    uint32_t stat_count_active_users(void);          // also correct
-
-    uint32_t cntusr(void);                           // INCORRECT  
-
-Encoding the type of a function into the name (so-called Hungarian
-notation) is brain damaged - the compiler knows the types anyway and can
-check those, and it only confuses the programmer.
-
-LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
-::
-    static uint32_t _usr_counter(void)                          // correct
-    {
-        // ... 
-    }
-
-    static uint32_t _this_function_return_user_counter(void)    // INCORRECT
-    {
-        // ... 
-    }  
-
-    static uint32_t usr_counter(void)                           // INCORRECT
-    {
-        // ... 
-    }
-
-    static uint32_t _foo(void)                                  // INCORRECT
-    {
-        // ...
-    }
-
-LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
-::
-    static bool _is_ack_received = false;   // correct
-    static bool _is_ack = false;            // also correct
-    static bool is_ack_received = false;    // INCORRECT
-    static bool _flag1 = false;             // INCORRECT
-
-LOCAL variable names should be short, and to the point.  If you have
-some random integer loop counter, it should probably be called ``i``.
-Calling it ``loop_counter`` is non-productive, if there is no chance of it
-being mis-understood.  Similarly, ``tmp`` can be just about any type of
-variable that is used to hold a temporary value.
-
-CONST variable names should be always UPPERCASE.
-::
-    const uint32_t DAYS_IN_WEEK = 7U;       // correct
-    const uint32_t days_in_week = 7U;       // INCORRECT
-
-DEFINE statements and macros names should be always UPPERCASE.
-::
-    #define SEC_PER_YEAR         (60U * 60U * 24U * 365UL)     // correct
-    #define MESSAGE_BUFFER_SIZE  (512U)                        // correct
-    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))     // correct
-    #define min(x,y)             (((x) < (y)) ? (x) : (y))     // INCORRECT 
-
-Enums
-^^^^^
-
-It's preferable to use ``enum`` instead ``#define`` for multiple definition.
-Enum should have a brace on a separate line and enum elements must be written in a column.
-::
-    enum example_e                          // correct
-    {
-        ELM_1,
-        ELM_2,
-        ELM_3 
-    };
-
-    enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
-
-Enum should have descriptive name and the name must end with the ``_e`` postfix.
-Enum element names should be always UPPERCASE and must contain at least part of the enum name.
-::
-    enum gnss_mode_e                        // correct
-    {
-        MODE_GPS = 0,
-        MODE_SBAS,
-        MODE_GALILEO,
-        MODE_BEIDOU,
-        MODE_IMES,
-        MODE_QZSS,
-        MODE_GLONASS
-    };
-
-    enum gnm_e                              // INCORRECT
-    {    
-        GPS = 0,
-        SBAS,
-        GALILEO,
-        BEIDOU,
-        IMES,
-        QZSS,
-        GLONASS
-    } 
 
 
 Formatting your code
