@@ -272,6 +272,63 @@ Struct members should be always ``lower_case`` and written in a column.
 Typedef
 ^^^^^^^
 
+Typedef should have descriptive name and the name must end with the ``_t`` postfix.
+Typedef should have an opening brace on the same line with the ``struct`` or ``enum`` name, add single space between ``tag(struct, enum)`` name and opening brace.
+Add single space between closing brace and ``typedef`` name.
+::
+    typedef struct sample_s {                       // correct
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    } sample_t;
+
+    typedef enum gnss_mode_e {                      // correct
+        MODE_GPS = 0U,
+        MODE_SBAS,
+        MODE_GALILEO,
+        MODE_BEIDOU,
+        MODE_IMES,
+        MODE_QZSS,
+        MODE_GLONASS
+    } gnss_mode_t;
+
+    typedef struct sample_s {                       // INCORRECT
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    }sample;
+
+Functions
+^^^^^^^^^
+
+Functions should be short and sweet, and do just one thing.  They should
+fit on one or two screenfuls of text (the ISO/ANSI screen size is 80x24,
+as we all know), and do one thing and do that well.
+
+The maximum length of a function is inversely proportional to the
+complexity and indentation level of that function.  So, if you have a
+conceptually simple function that is just one long (but simple)
+case-statement, where you have to do lots of small things for a lot of
+different cases, it's OK to have a longer function.
+
+However, if you have a complex function, and you suspect that a
+less-than-gifted first-year high-school student might not even
+understand what the function is all about, you should adhere to the
+maximum limits all the more closely.  Use helper functions with
+descriptive names (you can ask the compiler to in-line them if you think
+it's performance-critical, and it will probably do a better job of it
+than you would have done).
+
+Another measure of the function is the number of local variables.  They
+shouldn't exceed 5-10, or you're doing something wrong.  Re-think the
+function, and split it into smaller pieces.  A human brain can
+generally easily keep track of about 7 different things, anything more
+and it gets confused.
+
 Function Arguments
 ^^^^^^^^^^^^^^^^^^
 
@@ -329,6 +386,7 @@ Function Arguments
     {
         // ... 
     }   
+
 
 Comments
 ^^^^^^^^
