@@ -127,7 +127,7 @@ Braces
 Naming
 ^^^^^^
 
-GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names.
+- GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names.
 The global function name must contain the name of the module in which it is defined.
 If you have a function that counts the number of active users and defined in ``statistics.c``, you should call that: 
 ::
@@ -141,7 +141,7 @@ Encoding the type of a function into the name (so-called Hungarian
 notation) is brain damaged - the compiler knows the types anyway and can
 check those, and it only confuses the programmer.
 
-LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
+- LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
 ::
     static uint32_t _usr_counter(void)                          // correct
     {
@@ -163,7 +163,7 @@ LOCAL function name should be short but descriptive, and start with  ``_`` prefi
         // ...
     }
 
-LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
+- LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
 ::
     static bool _is_ack_received = false;   // correct
     static bool _is_ack = false;            // also correct
@@ -176,12 +176,12 @@ Calling it ``loop_counter`` is non-productive, if there is no chance of it
 being mis-understood.  Similarly, ``tmp`` can be just about any type of
 variable that is used to hold a temporary value.
 
-CONST variable names should be always UPPERCASE.
+- CONST variable names should be always UPPERCASE.
 ::
     const uint32_t DAYS_IN_WEEK = 7U;       // correct
     const uint32_t days_in_week = 7U;       // INCORRECT
 
-DEFINE statements and macros names should be always UPPERCASE.
+- DEFINE statements and macros names should be always UPPERCASE.
 ::
     #define SEC_PER_YEAR         (60U * 60U * 24U * 365UL)     // correct
     #define MESSAGE_BUFFER_SIZE  (512U)                        // correct
@@ -192,8 +192,8 @@ Enum
 ^^^^
 
 It's preferable to use ``enum`` instead ``#define`` for multiple definition.
-Enum should have an opening brace on the same line with the enum name, add single space between enum name and opening brace.
-Enum members must be written in a column.
+- Enum should have an opening brace on the same line with the enum name, add single space between enum name and opening brace.
+- Enum members must be written in a column.
 ::
     enum example_e {                         // correct
         ELM_1,
@@ -203,8 +203,8 @@ Enum members must be written in a column.
 
     enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
 
-Enum should have descriptive name and the name must end with the ``_e`` postfix.
-Enum member names should be always UPPERCASE and must contain at least part of the enum name.
+- Enum should have descriptive name and the name must end with the ``_e`` postfix.
+- Enum member names should be always UPPERCASE and must contain at least part of the ``enum`` name.
 ::
     enum gnss_mode_e {                      // correct
         MODE_GPS = 0U,
@@ -229,9 +229,9 @@ Enum member names should be always UPPERCASE and must contain at least part of t
 Struct
 ^^^^^^
 
-Struct should have descriptive name and the name must end with the ``_s`` postfix.
-Struct should have an opening brace on the same line with the struct name, add single space between struct name and opening brace.
-Struct members should be always lower_case and written in a column.
+- Struct should have descriptive name and the name must end with the ``_s`` postfix.
+- Struct should have an opening brace on the same line with the ``struct`` name, add single space between ``struct`` name and opening brace.
+- Struct members should be always lower_case and written in a column.
 ::
 
     struct sample_s {                       // correct
@@ -265,6 +265,9 @@ Struct members should be always lower_case and written in a column.
         uint8_t fourth_field;
         bool sample_flag;
     };
+
+TypeDef
+^^^^^^^
 
 Comments
 ^^^^^^^^
