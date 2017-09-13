@@ -72,7 +72,7 @@ Do not add spaces around (inside) parenthesized expressions. ::
 
 Add single space around(on each side of) binary operators and ternary operators. No space is necessary for unary operators::
 
-    const int x = (y != 0U && z > y) ? z : y;               //correct
+    const int x = (y != 0U && z > y) ? z : y;               // correct
     
     const int y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);    // correct
 
@@ -194,7 +194,7 @@ Enum
 ^^^^
 
 It's preferable to use ``enum`` instead ``#define`` for multiple definition.
-Enum should have an opening brace on the same line with the enum name, add single space between enum name and opening brace.
+Enum should have an opening brace on the same line with the ``enum`` name, add single space between ``enum`` name and opening brace.
 Enum members must be written in a column.::
 
     enum example_e {                         // correct
