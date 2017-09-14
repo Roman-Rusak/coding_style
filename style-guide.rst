@@ -572,22 +572,22 @@ The same applies to function headers with a long argument list.
 However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. 
 :: 
     // This is correct
-    void some_function(const uint8_t *const x, const uint32_t y,
-                        const uint32_t z, bool *const q)               
+    void some_function(const uint8_t* const x, const uint32_t y,
+                        const uint32_t z, bool* const q)               
     {
         // ...
     }                        
 
     // This is also correct
     void some_function_with_a_very_long_name(
-                        const uint8_t *const x, const uint32_t y, 
-                        const uint32_t z, bool *const q) 
+                        const uint8_t* const x, const uint32_t y, 
+                        const uint32_t z, bool* const q) 
     {
         // ...
     }
 
     // INCORRECT 
-    void some_function(const uint8_t *const x, const uint32_t y, const uint32_t z, bool *const q)         
+    void some_function(const uint8_t* const x, const uint32_t y, const uint32_t z, bool* const q)         
     {
         // ... 
     }                        
