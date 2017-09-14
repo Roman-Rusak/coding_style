@@ -11,13 +11,13 @@ Style guide is a set of rules which are aimed to help create readable, maintaina
 C code formatting
 -----------------
 
-Indentation
-^^^^^^^^^^^
+1.Indentation
+-------------
 
 Use 4 spaces for each indentation level. Don't use tabs for indentation. Configure the editor to emit 4 spaces each time you press tab key.
 
-Vertical space
-^^^^^^^^^^^^^^
+2.Vertical space
+----------------
 
 Place one empty line between functions. Don't begin or end a function with an empty line.
 ::
@@ -33,32 +33,39 @@ Place one empty line between functions. Don't begin or end a function with an em
     {
                                     // INCORRECT, don't use an empty line here
         int var = 0;
-        while (var < SOME_CONSTANT) {
+        while (var < SOME_CONSTANT) 
+        {
             do_stuff(&var);
         }
     }
 
-Horizontal space
-^^^^^^^^^^^^^^^^
+3.Horizontal space
+------------------
 
 Always add single space after conditional and loop keywords( if, switch, case, for, do, while). ::
 
-    if (condition) {    // correct
+    if (condition)      // correct
+    {   
         // ...
     }
 
-    switch (n) {        // correct
+    switch (n)          // correct 
+    {        
         case 0:
             // ...
     }
 
-    if (x == y) {       // correct
+    if (x == y)         // correct
+    {       
        // ...
-    } else {
+    } 
+    else 
+    {
        // ...
     }
 
-    for(uint32_t i = 0; i < CONST; ++i) {    // INCORRECT
+    for(uint32_t i = 0; i < CONST; ++i)     // INCORRECT
+    {    
         // ... 
     }
 
@@ -100,8 +107,8 @@ Never use TAB characters for horizontal alignment.
 Never add trailing whitespace at the end of the line.
 
 
-Braces
-^^^^^^
+4.Braces
+--------
 
 - Function definition should have a brace on a separate line::
 
@@ -116,25 +123,37 @@ Braces
         // ...
     }
 
-- Within a function, place opening brace on the same line with conditional and loop statements::
+- Conditional and loop statements should have a brace on a separate line::
     
-    if (condition) {
+    if (condition) 
+    {
         do_one();
-    } else if (other_condition) {
+    } 
+    else if (other_condition) 
+    {
         do_two();
     }
 
-Naming
-^^^^^^
+5.Naming
+--------
 
 GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names and should be always ``lower_case``.
 The global function name must contain the name of the module in which it is defined.
-If you have a function that counts the number of active users and defined in ``statistics.c``, you should call that: 
+If you have a function that get ADC value and defined in ``bsp/bsp_adc.c``, you should call that: 
 ::
 
+    uint32_t bsp_adc_get_value(void);                // correct
+
+    uint32_t bsp_get_adc_value(void);                // INCORRECT
+
+    uint32_t adc_get_value(void);                    // INCORRECT
+
+You can shorten function names, the preferred name length is less than 40 symbols.
+If you have a function that counts the number of active users and defined in ``app/statistics/statistics.c``, you can call that:
+::
     uint32_t statistics_count_active_users(void);    // correct 
 
-    uint32_t stat_count_active_users(void);          // also correct
+    uint32_t stat_count_active_users(void);          // also correctW
 
     uint32_t cntusr(void);                           // INCORRECT  
 
@@ -190,27 +209,56 @@ DEFINE statements and macros names should be always UPPERCASE.::
     #define MIN(x,y)             (((x) < (y)) ? (x) : (y))     // correct
     #define min(x,y)             (((x) < (y)) ? (x) : (y))     // INCORRECT 
 
-Enum
-^^^^
+6.Enum
+-------
 
-It's preferable to use ``enum`` instead ``#define`` for multiple definition.
-Enum should have an opening brace on the same line with the ``enum`` name, add single space between ``enum`` name and opening brace.
-Enum members must be written in a column.::
+It's preferable to use ``enum`` instead ``#define`` for multiple definition. Enum should have a brace on a separate line.
+Don't begin or end an ``enum`` with an empty line. Enum members must be written in a column.
+::
 
-    enum example_e {                         // correct
+    enum example_e                          // correct 
+    {   
         ELM_1,
         ELM_2,
         ELM_3 
     };
+
+    enum example_e 
+    {      
+                                            // INCORRECT, don't place empty line here
+        ELM_1,
+        ELM_2,
+        ELM_3 
+    };
+
+     enum example_e
+    {    
+        ELM_1,
+        ELM_2,
+        ELM_3
+                                            // INCORRECT, don't place empty line here 
+    };
+
 
     enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
 
 Enum should have descriptive name and the name must end with the ``_e`` postfix.
 Enum member names should be always UPPERCASE and must contain at least part of the ``enum`` name.
 ::
+    enum gnss_mode_e                        // correct 
+    {               
+        GNSS_MODE_GPS,
+        GNSS_MODE_SBAS,
+        GNSS_MODE_GALILEO,
+        GNSS_MODE_BEIDOU,
+        GNSS_MODE_IMES,
+        GNSS_MODE_QZSS,
+        GNSS_MODE_GLONASS
+    };
 
-    enum gnss_mode_e {                      // correct
-        MODE_GPS = 0U,
+    enum gnss_mode_e                        // also correct
+    {                
+        MODE_GPS,
         MODE_SBAS,
         MODE_GALILEO,
         MODE_BEIDOU,
@@ -219,8 +267,9 @@ Enum member names should be always UPPERCASE and must contain at least part of t
         MODE_GLONASS
     };
 
-    enum gnm {                                // INCORRECT   
-        GPS = 0U,
+    enum gnss_mode_e                         // INCORRECT  
+    {              
+        GPS,
         SBAS,
         GALILEO,
         BEIDOU,
@@ -229,15 +278,63 @@ Enum member names should be always UPPERCASE and must contain at least part of t
         GLONASS
     } 
 
-Struct
-^^^^^^
+7.Struct
+---------
+
+Struct should have a brace on a separate line. Don't begin or end an ``struct`` with an empty line.
+::
+    struct sample_s                         // correct
+    {                       
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
+    struct sample_s {                        // INCORRECT 
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
+    struct sample_s
+    {       
+                                            // INCORRECT, don't place empty line here                 
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
 
 Struct should have descriptive name and the name must end with the ``_s`` postfix.
-Struct should have an opening brace on the same line with the ``struct`` name, add single space between ``struct`` name and opening brace.
+::
+    struct sample_s                         // correct
+    {                       
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
+    struct sample                           // INCORRECT
+    {                          
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    };
+
 Struct members should be always ``lower_case`` and written in a column.
 ::
 
-    struct sample_s {                       // correct
+    struct sample_s                         // correct
+    {                       
         uint32_t first_field;
         uint8_t second_field;
         uint8_t third_field;
@@ -245,15 +342,8 @@ Struct members should be always ``lower_case`` and written in a column.
         bool sample_flag;
     };
 
-    struct sample{                          // INCORRECT
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
-
-    struct sample_s {                       // INCORRECT
+    struct sample_s                         // INCORRECT
+    {                       
         uint32_t FirstField;
         uint8_t SecondField;
         uint8_t ThirdField;
@@ -261,22 +351,15 @@ Struct members should be always ``lower_case`` and written in a column.
         bool SampleFlag;
     };
 
-    struct {                                // INCORRECT
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
+    struct sample_s { uint32_t first_field; uint8_t second_field; uint8_t third_field; };  // INCORRECT
 
-Typedef
-^^^^^^^
+8.Typedef
+---------
 
-Typedef should have descriptive name and the name must end with the ``_t`` postfix.
-Typedef should have an opening brace on the same line with the ``struct`` or ``enum`` name, add single space between ``tag(struct, enum)`` name and opening brace.
-Add single space between closing brace and ``typedef`` name.
+Typedef should have a brace on a separate line. Don't begin or end an ``typedef`` with an empty line.
 ::
-    typedef struct sample_s {                       // correct
+    typedef struct sample_s                 // correct
+    {                       
         uint32_t first_field;
         uint8_t second_field;
         uint8_t third_field;
@@ -284,7 +367,29 @@ Add single space between closing brace and ``typedef`` name.
         bool sample_flag;
     } sample_t;
 
-    typedef enum gnss_mode_e {                      // correct
+    typedef struct sample_s {               // INCORRECT 
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    } sample_t;
+
+    typedef struct sample_s
+    {       
+                                            // INCORRECT, don't place empty line here                 
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        uint8_t fourth_field;
+        bool sample_flag;
+    } sample_t;
+
+Typedef should have descriptive name and the name must end with the ``_t`` postfix.
+Add single space between closing brace and ``typedef`` name.
+::
+    typedef enum gnss_mode_e
+    {                      
         MODE_GPS = 0U,
         MODE_SBAS,
         MODE_GALILEO,
@@ -292,18 +397,32 @@ Add single space between closing brace and ``typedef`` name.
         MODE_IMES,
         MODE_QZSS,
         MODE_GLONASS
-    } gnss_mode_t;
+    } gnss_mode_t;               // correct 
 
-    typedef struct sample_s {                       // INCORRECT
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    }sample;
+    typedef enum gnss_mode_e
+    {                      
+        MODE_GPS = 0U,
+        MODE_SBAS,
+        MODE_GALILEO,
+        MODE_BEIDOU,
+        MODE_IMES,
+        MODE_QZSS,
+        MODE_GLONASS
+    }gnss_mode_t;                // INCORRECT
 
-Functions
-^^^^^^^^^
+    typedef enum gnss_mode_e
+    {                      
+        MODE_GPS = 0U,
+        MODE_SBAS,
+        MODE_GALILEO,
+        MODE_BEIDOU,
+        MODE_IMES,
+        MODE_QZSS,
+        MODE_GLONASS
+    } gnss_mode;                // INCORRECT
+
+9.Functions
+-----------
 
 Functions should be short and sweet, and do just one thing.  They should
 fit on one or two screenfuls of text (the ISO/ANSI screen size is 80x24,
@@ -329,17 +448,17 @@ function, and split it into smaller pieces.  A human brain can
 generally easily keep track of about 7 different things, anything more
 and it gets confused.
 
-Function Arguments
-^^^^^^^^^^^^^^^^^^
+10.Function arguments
+---------------------
 
 - All arguments passed by value and do not modified in function must be labeled ``const``.
 ::
-
     void some_function(const uint32_t ext_arg)      // correct
     {
         static uint32_t sample_arg = 0U;
 
-        if(sample_arg != ext_arg) {
+        if(sample_arg != ext_arg) 
+        {
             do_something();
             sample_arg = ext_arg;
         }
@@ -349,7 +468,8 @@ Function Arguments
     {
         static uint32_t sample_arg = 0U;
 
-        if(sample_arg != ext_arg) {
+        if(sample_arg != ext_arg) 
+        {
             do_something();
             sample_arg = ext_arg;
         }
@@ -357,26 +477,27 @@ Function Arguments
 
 - All pointers to arguments passed to function and do not modified in function must be labeled ``const``.
 ::
-
-    bool check_settings(settings_t *const settings) // correct
+    bool check_settings(settings_t* const settings) // correct
     {
         //...     
-        if(settings != NULL) {
+        if(settings != NULL) 
+        {
             return true;
         }
         return false;
     }
 
-    bool check_settings(settings_t *settings)       // INCORRECT
+    bool check_settings(settings_t* settings)       // INCORRECT
     {
         //...
-        if(settings != NULL) {
+        if(settings != NULL) 
+        {
             return true;
         }
         return false;
     }
 
-- Do not pass to much arguments to function, use ``struct``, ``typedef``, ``enum`` instead.
+- Do not pass to much arguments to function, use ``struct``, ``typedef`` instead.
 ::
     
     // INCORRECT 
@@ -388,8 +509,8 @@ Function Arguments
     }   
 
 
-Comments
-^^^^^^^^
+11.Comments
+-----------
 
 Use ``//`` for single line comments. For multi-line comments it is okay to use either ``//`` on each line or a ``/* */`` block.
 
@@ -439,8 +560,8 @@ The preferred style for long (multi-line) comments is: ::
      * with beginning and ending almost-blank lines.
      */
 
-Breaking long lines and strings
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12.Breaking long lines and strings
+----------------------------------
 
 The limit on the length of lines is 80 columns and this is a strongly preferred limit.
 Statements longer than 80 columns will be broken into sensible chunks, unless exceeding 80 columns significantly increases 
@@ -469,7 +590,101 @@ However, never break user-visible strings such as printk messages, because that 
         // ... 
     }                        
 
+12.File structure
+-------------------
 
+In ``.c`` files you must follow the next file structure:
+::
+    /* ===== INCLUDES =========================================================== */
+
+    #include <string.h>
+
+    /* ===== DEFINE ============================================================= */
+
+    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))
+
+    /* ===== ENUMS ============================================================== */
+
+    enum sample_e                           
+    {   
+        SAMPLE_FIELD_1,
+        SAMPLE_FIELD_2,
+        SAMPLE_FIELD_3 
+    };
+
+    /* ===== TYPES ============================================================== */
+
+    typedef struct sample_s                 
+    {                       
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        bool sample_flag;
+    } sample_t;
+
+    /* ===== STRUCTURES ========================================================= */
+
+    struct some_struct_s                         
+    {                       
+        uint32_t first_field;
+        uint8_t second_field;
+        bool sample_flag;
+    };
+
+    /* ===== LOCAL FUNCTIONS PROTOTYPES ========================================= */
+
+    static uint32_t _some_function(void); 
+
+    /* ===== LOCAL VARIABLES ==================================================== */
+
+    static bool _is_whatever = true;
+
+    /* ===== GLOBAL FUNCTIONS =================================================== */
+
+    void some_task(void)
+    {
+        //...
+    }
+
+    /* ===== LOCAL FUNCTIONS ==================================================== */
+
+    static uint32_t _some_function(void)
+    {
+        //...
+    }
+
+In ``.h`` files you must follow the next file structure:
+::
+    /* ===== INCLUDES =========================================================== */
+
+    #include <string.h>
+
+    /* ===== DEFINE ============================================================= */
+
+    #define MIN(x,y)             (((x) < (y)) ? (x) : (y))
+
+    /* ===== ENUMS ============================================================== */
+
+    enum sample_e                           
+    {   
+        SAMPLE_FIELD_1,
+        SAMPLE_FIELD_2,
+        SAMPLE_FIELD_3 
+    };
+
+    /* ===== TYPES ============================================================== */
+
+    typedef struct sample_s                 
+    {                       
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
+        bool sample_flag;
+    } sample_t;
+
+    /* ===== GLOBAL FUNCTIONS PROTOTYPES ======================================== */
+
+    void some_task(void);
 
 Formatting your code
 ^^^^^^^^^^^^^^^^^^^^
