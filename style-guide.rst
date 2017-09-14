@@ -153,7 +153,7 @@ If you have a function that counts the number of active users and defined in ``a
 ::
     uint32_t statistics_count_active_users(void);    // correct 
 
-    uint32_t stat_count_active_users(void);          // also correctW
+    uint32_t stat_count_active_users(void);          // also correct
 
     uint32_t cntusr(void);                           // INCORRECT  
 
@@ -281,7 +281,7 @@ Enum member names should be always UPPERCASE and must contain at least part of t
 7.Struct
 ---------
 
-Struct should have a brace on a separate line. Don't begin or end an ``struct`` with an empty line.
+Struct should have a brace on a separate line. Don't begin or end a ``struct`` with an empty line.
 ::
     struct sample_s                         // correct
     {                       
@@ -356,7 +356,7 @@ Struct members should be always ``lower_case`` and written in a column.
 8.Typedef
 ---------
 
-Typedef should have a brace on a separate line. Don't begin or end an ``typedef`` with an empty line.
+Typedef should have a brace on a separate line. Don't begin or end a ``typedef`` with an empty line.
 ::
     typedef struct sample_s                 // correct
     {                       
@@ -453,6 +453,7 @@ and it gets confused.
 
 - All arguments passed by value and do not modified in function must be labeled ``const``.
 ::
+
     void some_function(const uint32_t ext_arg)      // correct
     {
         static uint32_t sample_arg = 0U;
@@ -477,6 +478,7 @@ and it gets confused.
 
 - All pointers to arguments passed to function and do not modified in function must be labeled ``const``.
 ::
+
     bool check_settings(settings_t* const settings) // correct
     {
         //...     
@@ -553,7 +555,7 @@ The preferred style for long (multi-line) comments is: ::
 
     /*
      * This is the preferred style for multi-line
-     * comments in the Linux kernel source code.
+     * comments.
      * Please use it consistently.
      *
      * Description:  A column of asterisks on the left side,
