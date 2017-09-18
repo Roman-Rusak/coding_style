@@ -218,24 +218,24 @@ Don't begin or end an ``enum`` with an empty line. Enum members must be written 
 
     enum example_e                          // correct 
     {   
-        ELM_1,
-        ELM_2,
-        ELM_3 
+        FIELD_1,
+        FIELD_2,
+        FIELD_3 
     };
 
     enum example_e 
     {      
                                             // INCORRECT, don't place empty line here
-        ELM_1,
-        ELM_2,
-        ELM_3 
+        FIELD_1,
+        FIELD_2,
+        FIELD_3 
     };
 
      enum example_e
     {    
-        ELM_1,
-        ELM_2,
-        ELM_3
+        FIELD_1,
+        FIELD_2,
+        FIELD_3
                                             // INCORRECT, don't place empty line here 
     };
 
@@ -654,6 +654,7 @@ In ``.c`` files you must follow the next file structure:
     {
         //...
     }
+- Note that static function should ALWAYS have prototype.
 
 In ``.h`` files you must follow the next file structure:
 ::
