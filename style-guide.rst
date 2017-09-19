@@ -1,5 +1,5 @@
 
-Test C-Style Guide
+C-Style Guide
 ===============================================
 
 
@@ -8,20 +8,18 @@ About this guide
  
 Style guide is a set of rules which are aimed to help create readable, maintainable, and robust code. By writing code which looks the same way across the code base we help others read and comprehend the code. By using same conventions for spaces and newlines we reduce chances that future changes will produce huge unreadable diffs. By following common patterns for module structure and by using language features consistently we help others understand code behavior.
 
-C code formatting
------------------
 
-1.Indentation
--------------
+1. Indentation
+--------------
 
 Use 4 spaces for each indentation level. Don't use tabs for indentation. Configure the editor to emit 4 spaces each time you press tab key.
 
-2.Vertical space
-----------------
+2. Vertical space
+-----------------
 
 Place one empty line between functions. Don't begin or end a function with an empty line.
-::
 
+.. code-block:: c
     void function1(void)
     {
         do_one_thing();
@@ -39,11 +37,12 @@ Place one empty line between functions. Don't begin or end a function with an em
         }
     }
 
-3.Horizontal space
-------------------
+3. Horizontal space
+-------------------
 
-Always add single space after conditional and loop keywords( if, switch, case, for, do, while). ::
+Always add single space after conditional and loop keywords( if, switch, case, for, do, while). 
 
+.. code-block:: c
     if (condition)      // correct
     {   
         // ...
@@ -69,16 +68,19 @@ Always add single space after conditional and loop keywords( if, switch, case, f
         // ... 
     }
 
-Don't add single space after these keywords: sizeof, typeof, alignof, or __attribute__. :: 
+Don't add single space after these keywords: sizeof, typeof, alignof, or __attribute__. 
 
+.. code-block:: c
     s = sizeof(struct file);    // correct
 
-Do not add spaces around (inside) parenthesized expressions. ::
-    
+Do not add spaces around (inside) parenthesized expressions.
+
+.. code-block:: c    
     s = sizeof( struct file );  // INCORRECT
 
-Add single space around(on each side of) binary operators and ternary operators. No space is necessary for unary operators::
+Add single space around(on each side of) binary operators and ternary operators. No space is necessary for unary operators:
 
+.. code-block:: c
     const int x = (y != 0U && z > y) ? z : y;               // correct
     
     const int y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);    // correct
@@ -91,8 +93,9 @@ Add single space around(on each side of) binary operators and ternary operators.
 No space is necessary around ``.`` and ``->`` operators.
 
 
-Sometimes adding horizontal space within a line can help make code more readable. For example, you can add space to align function arguments::
+Sometimes adding horizontal space within a line can help make code more readable. For example, you can add space to align function arguments:
 
+.. code-block:: c
     gpio_matrix_in(PIN_CAM_D6,   I2S0I_DATA_IN14_IDX, false);
     gpio_matrix_in(PIN_CAM_D7,   I2S0I_DATA_IN15_IDX, false);
     gpio_matrix_in(PIN_CAM_HREF, I2S0I_H_ENABLE_IDX,  false);
@@ -107,11 +110,12 @@ Never use TAB characters for horizontal alignment.
 Never add trailing whitespace at the end of the line.
 
 
-4.Braces
---------
+4. Braces
+---------
 
-- Function definition should have a brace on a separate line::
+- Function definition should have a brace on a separate line:
 
+.. code-block:: c
     // This is correct:
     void function(uint32_t arg)
     {
@@ -123,8 +127,9 @@ Never add trailing whitespace at the end of the line.
         // ...
     }
 
-- Conditional and loop statements should have a brace on a separate line::
-    
+- Conditional and loop statements should have a brace on a separate line:
+
+.. code-block:: c
     if (condition) 
     {
         do_one();
@@ -134,13 +139,14 @@ Never add trailing whitespace at the end of the line.
         do_two();
     }
 
-5.Naming
---------
+5. Naming
+---------
 
 GLOBAL variables and functions(to be used only if you really need them) need to have descriptive names and should be always ``lower_case``.
 The global function name must contain the name of the module in which it is defined.
 If you have a function that get ADC value and defined in ``bsp/bsp_adc.c``, you should call that: 
-::
+
+.. code-block:: c
 
     uint32_t bsp_adc_get_value(void);                // correct
 
@@ -150,7 +156,8 @@ If you have a function that get ADC value and defined in ``bsp/bsp_adc.c``, you 
 
 You can shorten function names, the preferred name length is less than 40 symbols.
 If you have a function that counts the number of active users and defined in ``app/statistics/statistics.c``, you can call that:
-::
+
+.. code-block:: c
     uint32_t statistics_count_active_users(void);    // correct 
 
     uint32_t stat_count_active_users(void);          // also correct
@@ -162,8 +169,8 @@ notation) is brain damaged - the compiler knows the types anyway and can
 check those, and it only confuses the programmer.
 
 LOCAL function name should be short but descriptive, and start with  ``_`` prefix.
-::
 
+.. code-block:: c
     static uint32_t _usr_counter(void)                          // correct
     {
         // ... 
@@ -185,7 +192,8 @@ LOCAL function name should be short but descriptive, and start with  ``_`` prefi
     }
 
 LOCAL variable names declared as static within a file should be descriptive, and start with  ``_`` prefix.
-::
+
+.. code-block:: c
     static bool _is_ack_received = false;   // correct
     static bool _is_ack = false;            // also correct
     static bool is_ack_received = false;    // INCORRECT
@@ -197,25 +205,27 @@ Calling it ``loop_counter`` is non-productive, if there is no chance of it
 being mis-understood.  Similarly, ``tmp`` can be just about any type of
 variable that is used to hold a temporary value.
 
-CONST variable names should be always UPPERCASE.::
+CONST variable names should be always UPPERCASE.
 
+.. code-block:: c
     const uint32_t DAYS_IN_WEEK = 7U;       // correct
     const uint32_t days_in_week = 7U;       // INCORRECT
 
-DEFINE statements and macros names should be always UPPERCASE.::
+DEFINE statements and macros names should be always UPPERCASE.
 
+.. code-block:: c
     #define SEC_PER_YEAR         (60U * 60U * 24U * 365UL)     // correct
     #define MESSAGE_BUFFER_SIZE  (512U)                        // correct
     #define MIN(x,y)             (((x) < (y)) ? (x) : (y))     // correct
     #define min(x,y)             (((x) < (y)) ? (x) : (y))     // INCORRECT 
 
-6.Enum
--------
+6. Enum
+--------
 
-It's preferable to use ``enum`` instead ``#define`` for multiple definition. Enum should have a brace on a separate line.
+It's preferable to use ``enum`` instead ``#define`` when defining several related constants. Enum should have a brace on a separate line.
 Don't begin or end an ``enum`` with an empty line. Enum members must be written in a column.
-::
 
+.. code-block:: c
     enum example_e                          // correct 
     {   
         FIELD_1,
@@ -244,7 +254,8 @@ Don't begin or end an ``enum`` with an empty line. Enum members must be written 
 
 Enum should have descriptive name and the name must end with the ``_e`` postfix.
 Enum member names should be always UPPERCASE and must contain at least part of the ``enum`` name.
-::
+
+.. code-block:: c
     enum gnss_mode_e                        // correct 
     {               
         GNSS_MODE_GPS,
@@ -278,11 +289,12 @@ Enum member names should be always UPPERCASE and must contain at least part of t
         GLONASS
     } 
 
-7.Struct
----------
+7. Struct
+----------
 
 Struct should have a brace on a separate line. Don't begin or end a ``struct`` with an empty line.
-::
+
+.. code-block:: c
     struct sample_s                         // correct
     {                       
         uint32_t first_field;
@@ -311,7 +323,8 @@ Struct should have a brace on a separate line. Don't begin or end a ``struct`` w
     };
 
 Struct should have descriptive name and the name must end with the ``_s`` postfix.
-::
+
+.. code-block:: c
     struct sample_s                         // correct
     {                       
         uint32_t first_field;
@@ -331,8 +344,8 @@ Struct should have descriptive name and the name must end with the ``_s`` postfi
     };
 
 Struct members should be always ``lower_case`` and written in a column.
-::
 
+.. code-block:: c
     struct sample_s                         // correct
     {                       
         uint32_t first_field;
@@ -353,11 +366,12 @@ Struct members should be always ``lower_case`` and written in a column.
 
     struct sample_s { uint32_t first_field; uint8_t second_field; uint8_t third_field; };  // INCORRECT
 
-8.Typedef
----------
+8. Typedef
+----------
 
 Typedef should have a brace on a separate line. Don't begin or end a ``typedef`` with an empty line.
-::
+
+.. code-block:: c
     typedef struct sample_s                 // correct
     {                       
         uint32_t first_field;
@@ -387,7 +401,8 @@ Typedef should have a brace on a separate line. Don't begin or end a ``typedef``
 
 Typedef should have descriptive name and the name must end with the ``_t`` postfix.
 Add single space between closing brace and ``typedef`` name.
-::
+
+.. code-block:: c
     typedef enum gnss_mode_e
     {                      
         MODE_GPS = 0U,
@@ -421,8 +436,8 @@ Add single space between closing brace and ``typedef`` name.
         MODE_GLONASS
     } gnss_mode;                // INCORRECT
 
-9.Functions
------------
+9. Functions
+------------
 
 Functions should be short and sweet, and do just one thing.  They should
 fit on one or two screenfuls of text (the ISO/ANSI screen size is 80x24,
@@ -452,8 +467,8 @@ and it gets confused.
 ---------------------
 
 - All arguments passed by value and do not modified in function must be labeled ``const``.
-::
 
+.. code-block:: c
     void some_function(const uint32_t ext_arg)      // correct
     {
         static uint32_t sample_arg = 0U;
@@ -477,8 +492,8 @@ and it gets confused.
     }
 
 - All pointers to arguments passed to function and do not modified in function must be labeled ``const``.
-::
 
+.. code-block:: c
     bool check_settings(settings_t* const settings) // correct
     {
         //...     
@@ -500,8 +515,8 @@ and it gets confused.
     }
 
 - Do not pass to much arguments to function, use ``struct``, ``typedef`` instead.
-::
-    
+
+.. code-block:: c  
     // INCORRECT 
     void some_function(const uint8_t *const a, const uint32_t b, const uint32_t c, 
                         const uint32_t d, const uint32_t e, const uint32_t f,
@@ -510,16 +525,16 @@ and it gets confused.
         // ... 
     }   
 
-
-11.Comments
------------
+11. Comments
+------------
 
 Use ``//`` for single line comments. For multi-line comments it is okay to use either ``//`` on each line or a ``/* */`` block.
 
 Although not directly related to formatting, here are a few notes about using comments effectively.
 
-- Don't use single comments to disable some functionality::
+- Don't use single comments to disable some functionality:
 
+.. code-block:: c
     void init_something(void)
     {
         setup_dma();
@@ -527,8 +542,9 @@ Although not directly related to formatting, here are a few notes about using co
         start_timer();
     }
 
-- If some code is no longer required, remove it completely. If you need it you can always look it up in git history of this file. If you disable some call because of temporary reasons, with an intention to restore it in the future, add explanation on the adjacent line::
+- If some code is no longer required, remove it completely. If you need it you can always look it up in git history of this file. If you disable some call because of temporary reasons, with an intention to restore it in the future, add explanation on the adjacent line:
 
+.. code-block:: c
     void init_something(void)
     {
         setup_dma();
@@ -539,8 +555,9 @@ Although not directly related to formatting, here are a few notes about using co
 
 - Same goes for ``#if 0 ... #endif`` blocks. Remove code block completely if it is not used. Otherwise, add comment explaining why the block is disabled. Don't use ``#if 0 ... #endif`` or comments to store code snippets which you may need in the future.
 
-- Don't add trivial comments about authorship and change date. You can always look up who modified any given line using git. E.g. this comment adds clutter to the code without adding any useful information::
+- Don't add trivial comments about authorship and change date. You can always look up who modified any given line using git. E.g. this comment adds clutter to the code without adding any useful information:
 
+.. code-block:: c
     void init_something(void)
     {
         setup_dma();
@@ -551,8 +568,9 @@ Although not directly related to formatting, here are a few notes about using co
         start_timer();
     }
 
-The preferred style for long (multi-line) comments is: ::
+The preferred style for long (multi-line) comments is: 
 
+.. code-block:: c
     /*
      * This is the preferred style for multi-line
      * comments.
@@ -562,15 +580,15 @@ The preferred style for long (multi-line) comments is: ::
      * with beginning and ending almost-blank lines.
      */
 
-12.Breaking long lines and strings
-----------------------------------
+12. Breaking long lines and strings
+-----------------------------------
 
 The limit on the length of lines is 80 columns and this is a strongly preferred limit.
 Statements longer than 80 columns will be broken into sensible chunks, unless exceeding 80 columns significantly increases 
 readability and does not hide information. Descendants are always substantially shorter than the parent and are placed substantially to the right. 
 The same applies to function headers with a long argument list. 
 However, never break user-visible strings such as printk messages, because that breaks the ability to grep for them. 
-:: 
+.. code-block:: c
     // This is correct
     void some_function(const uint8_t* const x, const uint32_t y,
                         const uint32_t z, bool* const q)               
@@ -592,11 +610,12 @@ However, never break user-visible strings such as printk messages, because that 
         // ... 
     }                        
 
-12.File structure
--------------------
+12. File structure
+--------------------
 
 In ``.c`` files you must follow the next file structure:
-::
+
+.. code-block:: c
     /* ===== INCLUDES =========================================================== */
 
     #include <string.h>
@@ -657,7 +676,8 @@ In ``.c`` files you must follow the next file structure:
 - Note that static function should ALWAYS have prototype.
 
 In ``.h`` files you must follow the next file structure:
-::
+
+.. code-block:: c
     /* ===== INCLUDES =========================================================== */
 
     #include <string.h>
