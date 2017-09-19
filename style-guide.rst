@@ -639,7 +639,38 @@ However, never break user-visible strings such as printk messages, because that 
         // ... 
     }                        
 
-12. File structure
+12. Inline assembly
+-------------------
+
+In architecture-specific code, you may need to use inline assembly to interface
+with CPU or platform functionality.  Don't hesitate to do so when necessary.
+However, don't use inline assembly gratuitously when C can do the job.  You can
+and should poke hardware from C when possible.
+
+Consider writing simple helper functions that wrap common bits of inline
+assembly, rather than repeatedly writing them with slight variations.  Remember
+that inline assembly can use C parameters.
+
+Large, non-trivial assembly functions should go in .S files, with corresponding
+C prototypes defined in C header files.  The C prototypes for assembly
+functions should use ``asmlinkage``.
+
+You may need to mark your asm statement as volatile, to prevent GCC from
+removing it if GCC doesn't notice any side effects.  You don't always need to
+do so, though, and doing so unnecessarily can limit optimization.
+
+When writing a single inline assembly statement containing multiple
+instructions, put each instruction on a separate line in a separate quoted
+string, and end each string except the last with ``\n\t`` to properly indent
+the next instruction in the assembly output:
+
+.. code-block:: c
+
+    asm ("magic %reg1, #42\n\t"
+         "more_magic %reg2, %reg3"
+         : /* outputs */ : /* inputs */ : /* clobbers */);
+
+13. File structure
 --------------------
 
 In ``.c`` files you must follow the next file structure:
@@ -745,4 +776,27 @@ Formatting your code
 
 You can use ``astyle`` program to format your code according to the above recommendations.
 
+Appendix 1. References
+----------------------
 
+The C Programming Language, Second Edition
+by Brian W. Kernighan and Dennis M. Ritchie.
+Prentice Hall, Inc., 1988.
+ISBN 0-13-110362-8 (paperback), 0-13-110370-9 (hardback).
+
+The Practice of Programming
+by Brian W. Kernighan and Rob Pike.
+Addison-Wesley, Inc., 1999.
+ISBN 0-201-61586-X.
+
+GNU manuals - where in compliance with K&R and this text - for cpp, gcc,
+gcc internals and indent, all available from http://www.gnu.org/manual/
+
+WG14 is the international standardization working group for the programming
+language C, URL: http://www.open-std.org/JTC1/SC22/WG14/
+
+Kernel process/coding-style.rst, by greg@kroah.com at OLS 2002:
+http://www.kroah.com/linux/talks/ols_2002_kernel_codingstyle_talk/html/
+
+Linux kernel coding style
+https://www.kernel.org/doc/html/v4.10/process/coding-style.html
