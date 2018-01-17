@@ -380,7 +380,7 @@ function, and split it into smaller pieces.  A human brain can
 generally easily keep track of about 7 different things, anything more
 and it gets confused.
 
-10.Function arguments
+10. Function arguments
 ---------------------
 
 All arguments passed by value and do not modified in function must be labeled ``const``.
@@ -536,7 +536,7 @@ However, never break user-visible strings such as printk messages, because that 
         // ... 
     }                        
 
-12. Inline assembly
+13. Inline assembly
 -------------------
 
 In architecture-specific code, you may need to use inline assembly to interface
@@ -567,7 +567,7 @@ the next instruction in the assembly output:
          "more_magic %reg2, %reg3"
          : /* outputs */ : /* inputs */ : /* clobbers */);
 
-13. File structure
+14. File structure
 --------------------
 
 In ``.c`` files it is desirable that you follow the next file structure:
