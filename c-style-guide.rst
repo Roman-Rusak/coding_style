@@ -147,6 +147,16 @@ Never add trailing whitespace at the end of the line.
         do_two();
     }
 
+    for (uint8_t i = 0; i < 500; i++)
+    {
+        do_one();
+    }
+      
+    // NOT like this:
+    for (uint8_t i = 0; i < 500; i++) {
+        do_one();
+    }
+
 5. Naming
 ---------
 
@@ -185,11 +195,6 @@ LOCAL function name should be short but descriptive, and start with  ``_`` prefi
     {
         // ... 
     }
-
-    static uint32_t _this_function_return_user_counter(void)    // INCORRECT
-    {
-        // ... 
-    }  
 
     static uint32_t usr_counter(void)                           // INCORRECT
     {
@@ -247,22 +252,12 @@ Don't begin or end an ``enum`` with an empty line. Enum members must be written 
         FIELD_3 
     };
 
-    enum example_e 
-    {      
-                                            // INCORRECT, don't place empty line here
+    enum example_e {                        // INCORRECT
+         
         FIELD_1,
         FIELD_2,
         FIELD_3 
     };
-
-     enum example_e
-    {    
-        FIELD_1,
-        FIELD_2,
-        FIELD_3
-                                            // INCORRECT, don't place empty line here 
-    };
-
 
     enum example_e {ELM_1, ELM_2, ELM_3};   // INCORRECT
 
@@ -293,6 +288,14 @@ Enum member names should be always UPPERCASE and must contain at least part of t
         MODE_GLONASS
     };
 
+    enum gnss_mode_e                        // INCORRECT
+    {
+        mode_gps,
+        mode_sbas,
+        mode_galileo,
+        mode_beidou,
+    };
+
     enum gnss_mode_e                         // INCORRECT  
     {              
         GPS,
@@ -302,159 +305,53 @@ Enum member names should be always UPPERCASE and must contain at least part of t
         IMES,
         QZSS,
         GLONASS
-    } 
+    };
 
 7. Struct
 ----------
 
-Struct should have a brace on a separate line. Don't begin or end a ``struct`` with an empty line.
+Struct should have descriptive name and the name must end with the ``_s`` postfix. Struct should have a brace on a separate line. Don't begin or end a ``struct`` with an empty line. Struct members should be always ``lower_case`` and written in a column.
 
 .. code-block:: c
 
-    struct sample_s                         // correct
-    {                       
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
+    struct sample_s                         // correct
+    {
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
     };
-
-    struct sample_s {                        // INCORRECT 
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
+     
+    struct sample_s                         // INCORRECT
+    {
+        uint32_t FirstField;
+        uint8_t SecondField;
+        uint8_t ThirdField;
     };
-
-    struct sample_s
-    {       
-                                            // INCORRECT, don't place empty line here                 
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
-
-Struct should have descriptive name and the name must end with the ``_s`` postfix.
-
-.. code-block:: c
-
-    struct sample_s                         // correct
-    {                       
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
-
-    struct sample                           // INCORRECT
-    {                          
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
-
-Struct members should be always ``lower_case`` and written in a column.
-
-.. code-block:: c
-
-    struct sample_s                         // correct
-    {                       
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    };
-
-    struct sample_s                         // INCORRECT
-    {                       
-        uint32_t FirstField;
-        uint8_t SecondField;
-        uint8_t ThirdField;
-        uint8_t FourthField;
-        bool SampleFlag;
-    };
-
-    struct sample_s { uint32_t first_field; uint8_t second_field; uint8_t third_field; };  // INCORRECT
+     
+    struct sample_s { uint32_t first_field; uint8_t second_field; uint8_t third_field; };  // INCORRECT
 
 8. Typedef
 ----------
 
-Typedef should have a brace on a separate line. Don't begin or end a ``typedef`` with an empty line.
+Typedef should have a brace on a separate line. Don't begin or end a ``typedef`` with an empty line. Typedef should have descriptive name and the name must end with the ``_t`` postfix. Add single space between closing brace and ``typedef`` name.
 
 .. code-block:: c
 
-    typedef struct sample_s                 // correct
-    {                       
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
+    typedef struct sample_s                 // correct
+    {
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
     } sample_t;
-
-    typedef struct sample_s {               // INCORRECT 
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
+     
+    typedef struct sample_s {               // INCORRECT
+        uint32_t first_field;
+        uint8_t second_field;
+        uint8_t third_field;
     } sample_t;
-
-    typedef struct sample_s
-    {       
-                                            // INCORRECT, don't place empty line here                 
-        uint32_t first_field;
-        uint8_t second_field;
-        uint8_t third_field;
-        uint8_t fourth_field;
-        bool sample_flag;
-    } sample_t;
-
-Typedef should have descriptive name and the name must end with the ``_t`` postfix.
-Add single space between closing brace and ``typedef`` name.
-
-.. code-block:: c
-
-    typedef enum gnss_mode_e
-    {                      
-        MODE_GPS = 0U,
-        MODE_SBAS,
-        MODE_GALILEO,
-        MODE_BEIDOU,
-        MODE_IMES,
-        MODE_QZSS,
-        MODE_GLONASS
-    } gnss_mode_t;               // correct 
-
-    typedef enum gnss_mode_e
-    {                      
-        MODE_GPS = 0U,
-        MODE_SBAS,
-        MODE_GALILEO,
-        MODE_BEIDOU,
-        MODE_IMES,
-        MODE_QZSS,
-        MODE_GLONASS
-    }gnss_mode_t;                // INCORRECT
-
-    typedef enum gnss_mode_e
-    {                      
-        MODE_GPS = 0U,
-        MODE_SBAS,
-        MODE_GALILEO,
-        MODE_BEIDOU,
-        MODE_IMES,
-        MODE_QZSS,
-        MODE_GLONASS
-    } gnss_mode;                // INCORRECT
+    
+    //  INCORRECT 
+    struct sample_s { uint32_t first_field; uint8_t second_field; uint8_t third_field;} sample_t; 
 
 9. Functions
 ------------
@@ -486,7 +383,7 @@ and it gets confused.
 10.Function arguments
 ---------------------
 
-- All arguments passed by value and do not modified in function must be labeled ``const``.
+All arguments passed by value and do not modified in function must be labeled ``const``.
 
 .. code-block:: c
 
@@ -512,7 +409,7 @@ and it gets confused.
         }
     }
 
-- All pointers to arguments passed to function and do not modified in function must be labeled ``const``.
+All pointers to arguments passed to function and do not modified in function must be labeled ``const``.
 
 .. code-block:: c
 
@@ -536,7 +433,7 @@ and it gets confused.
         return false;
     }
 
-- Do not pass to much arguments to function, use ``struct``, ``typedef`` instead.
+Do not pass to much arguments to function, use ``struct``, ``typedef`` instead.
 
 .. code-block:: c  
 
@@ -598,7 +495,7 @@ The preferred style for long (multi-line) comments is:
 
 .. code-block:: c
 
-    /*
+    /**
      * This is the preferred style for multi-line
      * comments.
      * Please use it consistently.
@@ -673,7 +570,7 @@ the next instruction in the assembly output:
 13. File structure
 --------------------
 
-In ``.c`` files you must follow the next file structure:
+In ``.c`` files it is desirable that you follow the next file structure:
 
 .. code-block:: c
 
@@ -736,7 +633,7 @@ In ``.c`` files you must follow the next file structure:
     }
 - Note that static function should ALWAYS have prototype.
 
-In ``.h`` files you must follow the next file structure:
+In ``.h`` files it is desirable that you follow the next file structure:
 
 .. code-block:: c
 
@@ -798,5 +695,5 @@ language C, URL: http://www.open-std.org/JTC1/SC22/WG14/
 Kernel process/coding-style.rst, by greg@kroah.com at OLS 2002:
 http://www.kroah.com/linux/talks/ols_2002_kernel_codingstyle_talk/html/
 
-Linux kernel coding style
+Linux kernel coding style:
 https://www.kernel.org/doc/html/v4.10/process/coding-style.html
